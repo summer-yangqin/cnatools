@@ -38,7 +38,10 @@ Tools for detection of somatic and germline copy number aberrations from targete
    ```bash
    docker build --rm=true -t mctp/cnatools .
    ```
-   * Run R from within the container: docker run --rm=true -it mctp/cnatools R
+   * Run R from within a container:
+   ```bash
+   docker run --rm=true -it mctp/cnatools R
+   ```
    * From within R, load the package and run the cna_pipeline function:
    ```r
    library(cnatools)
@@ -48,7 +51,7 @@ Tools for detection of somatic and germline copy number aberrations from targete
 			      BEDFILE = system.file("data/sample_bedfile.txt",package="cnatools"),
 			      NP = 6, OUTDIR = "/out", PREFIX = "testrun")
    ```
-   * This should produce output (as described below) in /out.
+   * This should produce output (as described below) in /out, using 'testrun' as a prefix for output filenames.
    * For regular use, one would want to run as a non-root user and write to a filesystem outside of the container; this can be accomplished by adding a 'useradd' line to the end of the Dockerfile, and by mounting directories inside the container using the -v option when running docker.  See the docker documentation for details.
 
    Non-docker users should follow analogous installation steps, namely installing the necessary prerequisites as described above and running devtools::install_github("mctp/cnatools") to install the package.
@@ -73,11 +76,11 @@ Tools for detection of somatic and germline copy number aberrations from targete
      In either case, this file should contain as many heterozygous SNPs from the normal sample as can be detected by the assay, but does not need to be filtered (the package does its own filtering).
 
    After installing the package, the following commands should clarify the required format of these three files:
-   * head(read.delim(system.file("data/sample_bedfile.txt",package="cnatools"),stringsAsFactors=FALSE,header=F))
-   * head(read.delim(system.file("data/sample_coverage_data.txt",package="cnatools"),stringsAsFactors=FALSE,header=F))
-   * head(read.delim(system.file("data/sample_zygosity_data.txt",package="cnatools"),stringsAsFactors=FALSE,header=F))
-
-
+   ```r
+   head(read.delim(system.file("data/sample_bedfile.txt",package="cnatools"),stringsAsFactors=FALSE,header=F))
+   head(read.delim(system.file("data/sample_coverage_data.txt",package="cnatools"),stringsAsFactors=FALSE,header=F))
+   head(read.delim(system.file("data/sample_zygosity_data.txt",package="cnatools"),stringsAsFactors=FALSE,header=F))
+   ```
 
    The cna_pipeline function requires three additional arguments:
    
