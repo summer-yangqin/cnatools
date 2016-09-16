@@ -100,6 +100,7 @@ Tools for detection of somatic and germline copy number aberrations from targete
      * PREFIX.QC.TN.txt
      * model_1
        * PREFIX.adjustment.txt
+       * PREFIX.adjustment.txt
        * PREFIX.classified-segments.txt
        * PREFIX.copynumber_by_locus.txt
        * PREFIX.coverage_data_classified.txt
