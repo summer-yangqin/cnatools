@@ -1,0 +1,9 @@
+Package: cnatools
+Title: Tools for Detection of Somatic and Germline Copy Number Aberrations from Targeted Next-Generation Sequencing Data
+Version: 0.0.9999
+Authors@R: person("Robert", "Lonigro", email = "lonigro@med.umich.edu", role = c("aut", "cre"))
+Description: This R package jointly estimates tumor purity and somatic copy number across the genome, given a pair of tumor/normal samples sequenced using a targeted capture approach. It has been successfully used to analyze whole exome data as well as data from relatively large targeted panels (1500-1700 genes).
+Depends: R (>= 3.3.1)
+License: MIT
+Encoding: UTF-8
+LazyData: true
