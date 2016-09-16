@@ -78,15 +78,15 @@ Tools for detection of somatic and germline copy number aberrations from targete
        * PREFIX.zygosity_data_classified.txt	
      * model-summary-stats.txt
      * PREFIX.QC.TN.txt
-   params.txt
-   processing
+   * params.txt
+   * processing
      * PREFIX.coverage-data-exclude-poly.rds
      * PREFIX.coverage-data.rds
      * PREFIX.gender-inferred.txt
      * PREFIX.segments.TvN.rds
      * PREFIX.zygosity-data-full.rds
      * PREFIX.zygosity-data-het-N.rds
-   run_finished.txt
+   * run_finished.txt
 
    At the beginning of the run, a params.txt file is produced that contains the set of input parameters passed to the algorithm.
    The processing subdirectory contains the processed coverage, zygosity, and segmentation data, stored as binary R files (they can be read via the readRDS function in R).
@@ -96,7 +96,7 @@ Tools for detection of somatic and germline copy number aberrations from targete
 
    An analogous classification_models_TP folder will be produced once the tumor vs. pool code is complete.
 
-   The relevant output files in the model_i folder are as follows:
+   The relevant output files in each model_i folder are as follows:
      * adjustment.txt: the adjustment made to the coverage data to compensate for the sample potentially not being diploid
      * classified-segments.txt: final classifications in a tab-delimited text file, one line per segment.
      * copynumber_by_locus.txt: copy number summarized by locus, if an input locus file is given to the cna_pipeline function
