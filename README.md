@@ -96,6 +96,8 @@ Tools for detection of somatic and germline copy number aberrations from targete
    The output directory is structured as follows:
 
    * classification_models_TN
+     * model-summary-stats.txt
+     * PREFIX.QC.TN.txt
      * model_1
        * PREFIX.adjustment.txt
        * PREFIX.classified-segments.txt
@@ -104,8 +106,6 @@ Tools for detection of somatic and germline copy number aberrations from targete
        * PREFIX.coverage_zygosity_plot.png
        * PREFIX.tumorcontent.txt
        * PREFIX.zygosity_data_classified.txt
-     * model-summary-stats.txt
-     * PREFIX.QC.TN.txt
    * params.txt
    * processing
      * PREFIX.coverage-data-exclude-poly.rds
