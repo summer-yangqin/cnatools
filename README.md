@@ -88,8 +88,12 @@ Tools for detection of somatic and germline copy number aberrations from targete
    * OUTDIR (output directory to which to write results, the user is assumed to have the necessary permissions to create and write to this directory)
    * PREFIX (a sample prefix to affix to the beginning of each output file).
 
-   It is possible to submit arguments via a configuration file (a two-column tab-delimited text file, no header, with the first column containing parameter names, and the second column containing parameter values).
-   In this case, the call to cna_pipeline would simply be cna_pipeline(config = "/path/to/config.file").  All arguments not appearing in this file would take on their default values.
+   It is possible to submit arguments via a configuration file (a two-column tab-delimited text file, no header, with the first column containing parameter names, and the second column containing parameter values).  Arguments not found in the config file take on their default values.
+   In this case,
+   ```r
+   cna_pipeline(config = "/path/to/config.file")
+   ```
+   is how the function would be run.
 
 4. Output Files Produced
 
