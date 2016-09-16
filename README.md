@@ -35,7 +35,7 @@ Tools for detection of somatic and germline copy number aberrations from targete
 
 3. Running the algorithm on real data
 
-The main function in the package is the cna_pipeline function, which requires a BED file as well as coverage and zygosity data for the tumor and normal samples.  Specifically:
+   The main function in the package is the cna_pipeline function, which requires a BED file as well as coverage and zygosity data for the tumor and normal samples.  Specifically:
 
    * The BED file should contain the coordinates of the regions targeted by the assay. (argument BEDFILE to cna_pipeline)
    * The coverage data may be specified in one of two ways:
@@ -52,65 +52,66 @@ The main function in the package is the cna_pipeline function, which requires a 
      (The ZYGOSITY_INPUT argument, which takes values 'txt' or 'vcf', controls which input format is assumed.)
      In either case, this file should contain as many heterozygous SNPs from the normal sample as can be detected by the assay, but does not need to be filtered (the package does its own filtering).
 
-See system.file("inst/data/...") for examples of these three files corresponding to the installation test described above.
+   See system.file("inst/data/...") for examples of these three files corresponding to the installation test described above.
 
-The cna_pipeline function requires three additional arguments:
-    * NP (number of processors to use; many steps are multi-threaded using the parallel package in R),
-    * OUTDIR (output directory to which to write results, the user is assumed to have the necessary permissions to create and write to this directory)
-    * PREFIX (a sample prefix to affix to the beginning of each output file).
+   The cna_pipeline function requires three additional arguments:
+   
+   * NP (number of processors to use; many steps are multi-threaded using the parallel package in R),
+   * OUTDIR (output directory to which to write results, the user is assumed to have the necessary permissions to create and write to this directory)
+   * PREFIX (a sample prefix to affix to the beginning of each output file).
 
-It is possible to submit arguments via a configuration file (a two-column tab-delimited text file, no header, with the first column containing parameter names, and the second column containing parameter values).
-In this case, the call to cna_pipeline would simply be cna_pipeline(config = "/path/to/config.file").  All arguments not appearing in this file would take on their default values.
+   It is possible to submit arguments via a configuration file (a two-column tab-delimited text file, no header, with the first column containing parameter names, and the second column containing parameter values).
+   In this case, the call to cna_pipeline would simply be cna_pipeline(config = "/path/to/config.file").  All arguments not appearing in this file would take on their default values.
 
 4. Output Format
 
-The output directory is structured as follows:
+   The output directory is structured as follows:
 
-├── classification_models_TN
-│   ├── model_1
-│   │   ├── PREFIX.adjustment.txt
-│   │   ├── PREFIX.classified-segments.txt
-│   │   ├── PREFIX.copynumber_by_locus.txt
-│   │   ├── PREFIX.coverage_data_classified.txt
-│   │   ├── PREFIX.coverage_zygosity_plot.png
-│   │   ├── PREFIX.tumorcontent.txt
-│   │   └── PREFIX.zygosity_data_classified.txt	
-│   ├── model-summary-stats.txt
-│   └── PREFIX.QC.TN.txt
-├── params.txt
-├── processing
-│   ├── PREFIX.coverage-data-exclude-poly.rds
-│   ├── PREFIX.coverage-data.rds
-│   ├── PREFIX.gender-inferred.txt
-│   ├── PREFIX.segments.TvN.rds
-│   ├── PREFIX.zygosity-data-full.rds
-│   └── PREFIX.zygosity-data-het-N.rds
-└── run_finished.txt
+   * classification_models_TN
+     * model_1
+       * PREFIX.adjustment.txt
+       * PREFIX.classified-segments.txt
+       * PREFIX.copynumber_by_locus.txt
+       * PREFIX.coverage_data_classified.txt
+       * PREFIX.coverage_zygosity_plot.png
+       * PREFIX.tumorcontent.txt
+       * PREFIX.zygosity_data_classified.txt	
+     * model-summary-stats.txt
+     * PREFIX.QC.TN.txt
+   params.txt
+   processing
+     * PREFIX.coverage-data-exclude-poly.rds
+     * PREFIX.coverage-data.rds
+     * PREFIX.gender-inferred.txt
+     * PREFIX.segments.TvN.rds
+     * PREFIX.zygosity-data-full.rds
+     * PREFIX.zygosity-data-het-N.rds
+   run_finished.txt
 
-At the beginning of the run, a params.txt file is produced that contains the set of input parameters passed to the algorithm.
-The processing subdirectory contains the processed coverage, zygosity, and segmentation data, stored as binary R files (they can be read via the readRDS function in R).
-The classification_models_TN directory (TN here stands for Tumor vs. Normal) contains the output from a set of candidate ploidy adjustments (each contained in its own folder: model_1, model_2, ..., model_N).
-These models are ranked by plausibility; model_1 has been ranked as the best, but output from the other models is retained in case the algorithm makes an incorrect choice.
-For convenience, we have always appended a final subdirectory (model_N) that is not really a model at all, it simply produces output files corresponding to the case where the sample has extremely low purity and all copy number classifications are copy neutral.
+   At the beginning of the run, a params.txt file is produced that contains the set of input parameters passed to the algorithm.
+   The processing subdirectory contains the processed coverage, zygosity, and segmentation data, stored as binary R files (they can be read via the readRDS function in R).
+   The classification_models_TN directory (TN here stands for Tumor vs. Normal) contains the output from a set of candidate ploidy adjustments (each contained in its own folder: model_1, model_2, ..., model_N).
+   These models are ranked by plausibility; model_1 has been ranked as the best, but output from the other models is retained in case the algorithm makes an incorrect choice.
+   For convenience, we have always appended a final subdirectory (model_N) that is not really a model at all, it simply produces output files corresponding to the case where the sample has extremely low purity and all copy number classifications are copy neutral.
 
-An analogous classification_models_TP folder will be produced once the tumor vs. pool code is complete.
+   An analogous classification_models_TP folder will be produced once the tumor vs. pool code is complete.
 
-The relevant output files in the model_i folder are as follows:
-  * adjustment.txt: the adjustment made to the coverage data to compensate for the sample potentially not being diploid
-  * classified-segments.txt: final classifications in a tab-delimited text file, one line per segment.
-  * copynumber_by_locus.txt: copy number summarized by locus, if an input locus file is given to the cna_pipeline function
-  * coverage_data_classified.txt: coverage data per targeted region, along with each region's copy number classification
-  * zygosity_data_classified.txt: zygosity data per SNP, along with each SNP's final copy number classification
-  * tumorcontent.txt: final estimated tumor content (between 0 and 1)
-  * coverage_zygosity_plot.png: plot of coverage and zygosity data, colored by status (dark red = amplification, red = gain, black = neutral, blue = loss, dark blue = homozogyous loss, orange = region excluded from classification, e.g. T-cell receptor loci)
+   The relevant output files in the model_i folder are as follows:
+     * adjustment.txt: the adjustment made to the coverage data to compensate for the sample potentially not being diploid
+     * classified-segments.txt: final classifications in a tab-delimited text file, one line per segment.
+     * copynumber_by_locus.txt: copy number summarized by locus, if an input locus file is given to the cna_pipeline function
+     * coverage_data_classified.txt: coverage data per targeted region, along with each region's copy number classification
+     * zygosity_data_classified.txt: zygosity data per SNP, along with each SNP's final copy number classification
+     * tumorcontent.txt: final estimated tumor content (between 0 and 1)
+     * coverage_zygosity_plot.png: plot of coverage and zygosity data, colored by status (dark red = amplification, red = gain, black = neutral, blue = loss, dark blue = homozogyous loss, orange = region excluded from classification, e.g. T-cell receptor loci)
 
-The QC.TN.txt file contains some useful statistics relevant to the lower limit of tumor content estimation, and the model-summary-stats.txt file contains some summary statistics used to rank the models.  These will be described in more detail later on.
+   The QC.TN.txt file contains some useful statistics relevant to the lower limit of tumor content estimation, and the model-summary-stats.txt file contains some summary statistics used to rank the models.  These will be described in more detail later on.
 
-At the end of a run, the run_finished.txt touch file is produced.
+   At the end of a run, the run_finished.txt touch file is produced.
 
-5. Limitations
+5. Notes and Limitations
 
-*  Throughout, chromosomes are assumed to be named {1,2,...,22,X,Y}.  If this is incompatible with the user's BAM and VCF files, by specifying COVERAGE_INPUT = 'txt' and ZYGOSITY_INPUT = 'txt' the user can produce files with these chromosome names.
-*  Samples are assumed to be human - xenograft samples may work but this has not been tested.
-*  Coordinates are assumed to be with respect to GRCh37.  In particular, locations of T-cell receptors, IgH loci, and PAR regions are currently hard-coded into the code using GRCh37 coordinates.  Sometime soon I will attempt to support GRCh38 input (but this effort is not underway yet).
+   *  Throughout, chromosomes are assumed to be named {1,2,...,22,X,Y}.  If this is incompatible with the user's BAM and VCF files, by specifying COVERAGE_INPUT = 'txt' and ZYGOSITY_INPUT = 'txt' the user can produce files with these chromosome names.
+   *  Samples are assumed to be human - xenograft samples may work but this has not been tested.
+   *  Coordinates are assumed to be with respect to GRCh37.  In particular, locations of T-cell receptors, IgH loci, and PAR regions are currently hard-coded into the code using GRCh37 coordinates.  At some point I will attempt to support GRCh38 input (but this effort is not underway yet).
 
