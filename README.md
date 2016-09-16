@@ -99,13 +99,13 @@ Tools for detection of somatic and germline copy number aberrations from targete
      * model-summary-stats.txt
      * PREFIX.QC.TN.txt
      * model_1
-       - PREFIX.adjustment.txt
-       - PREFIX.classified-segments.txt
-       - PREFIX.copynumber_by_locus.txt
-       - PREFIX.coverage_data_classified.txt
-       - PREFIX.coverage_zygosity_plot.png
-       - PREFIX.tumorcontent.txt
-       - PREFIX.zygosity_data_classified.txt
+        - PREFIX.adjustment.txt
+        - PREFIX.classified-segments.txt
+        - PREFIX.copynumber_by_locus.txt
+        - PREFIX.coverage_data_classified.txt
+        - PREFIX.coverage_zygosity_plot.png
+        - PREFIX.tumorcontent.txt
+        - PREFIX.zygosity_data_classified.txt
    * params.txt
    * processing
      * PREFIX.coverage-data-exclude-poly.rds
