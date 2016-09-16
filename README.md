@@ -29,9 +29,24 @@ Tools for detection of somatic and germline copy number aberrations from targete
    * Rsubread (1.22.3)
    * BSgenome.Hsapiens.UCSC.hg19 (1.4.0)
 
-   Other than R and these packages (plus their dependencies), the only external dependency is samtools, and is only required when interfacing with BAM files.
+   Other than R and these packages (plus their dependencies), the only external dependency is samtools, and it is only required when interfacing with BAM files.
 
    To test the installation, I have provided artificial data that may be used to test whether the algorithm runs properly.
+
+   Here are the steps necessary to run this test, using the included Dockerfile:
+   * download the Dockerfile, and from the directory containing this file, build the docker image:  docker build --rm=true -t mctp/cnatools .
+   * Run R from within the container: docker run --rm=true -it mctp/cnatools R
+   * From within R, load the package and run the cna_pipeline function:
+     * library(cnatools)
+     * cna_pipeline(COVERAGE_FILE = system.file("data/sample_coverage_data.txt",package="cnatools"),
+       				  ZYGOSITY_FILE = system.file("data/sample_zygosity_data.txt",package="cnatools"),
+				  COVERAGE_INPUT = "txt", ZYGOSITY_INPUT = "txt",
+				  BEDFILE = system.file("data/sample_bedfile.txt",package="cnatools"),
+				  NP = 6, OUTDIR = "/out", PREFIX = "testrun")
+   * This should produce output (as described below) in /out.
+   * For regular use, one would want to run as a non-root user and write to a filesystem outside of the container; this can be accomplished by adding a 'useradd' line to the end of the Dockerfile, and by mounting directories inside the container using the -v option when running docker.  See the docker documentation for details.
+
+   Non-docker users should follow analogous installation steps, namely installing the necessary prerequisites as described above and running devtools::install_github("mctp/cnatools") to install the package.
 
 3. Running the algorithm on real data
 
@@ -52,7 +67,12 @@ Tools for detection of somatic and germline copy number aberrations from targete
      (The ZYGOSITY_INPUT argument, which takes values 'txt' or 'vcf', controls which input format is assumed.)
      In either case, this file should contain as many heterozygous SNPs from the normal sample as can be detected by the assay, but does not need to be filtered (the package does its own filtering).
 
-   See system.file("inst/data/...") for examples of these three files corresponding to the installation test described above.
+   After installing the package, the following commands should clarify the required format of these three files:
+   * head(read.delim(system.file("data/sample_bedfile.txt",package="cnatools"),stringsAsFactors=FALSE,header=F))
+   * head(read.delim(system.file("data/sample_coverage_data.txt",package="cnatools"),stringsAsFactors=FALSE,header=F))
+   * head(read.delim(system.file("data/sample_zygosity_data.txt",package="cnatools"),stringsAsFactors=FALSE,header=F))
+
+
 
    The cna_pipeline function requires three additional arguments:
    
@@ -113,5 +133,5 @@ Tools for detection of somatic and germline copy number aberrations from targete
 
    *  Throughout, chromosomes are assumed to be named {1,2,...,22,X,Y}.  If this is incompatible with the user's BAM and VCF files, by specifying COVERAGE_INPUT = 'txt' and ZYGOSITY_INPUT = 'txt' the user can produce files with these chromosome names.
    *  Samples are assumed to be human - xenograft samples may work but this has not been tested.
-   *  Coordinates are assumed to be with respect to GRCh37.  In particular, locations of T-cell receptors, IgH loci, and PAR regions are currently hard-coded into the code using GRCh37 coordinates.  At some point I will attempt to support GRCh38 input (but this effort is not underway yet).
+   *  Coordinates are assumed to be with respect to GRCh37.  In particular, locations of T-cell receptors, IgH loci, and PAR regions are currently hard-coded into the code using GRCh37 coordinates.  At some point I will attempt to support GRCh38 coordinates, but this effort is not underway yet.
 
