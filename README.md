@@ -37,12 +37,14 @@ Tools for detection of somatic and germline copy number aberrations from targete
    * download the Dockerfile, and from the directory containing this file, build the docker image:  docker build --rm=true -t mctp/cnatools .
    * Run R from within the container: docker run --rm=true -it mctp/cnatools R
    * From within R, load the package and run the cna_pipeline function:
-     * library(cnatools)
-     * cna_pipeline(COVERAGE_FILE = system.file("data/sample_coverage_data.txt",package="cnatools"),
+   ```r
+   library(cnatools)
+   cna_pipeline(COVERAGE_FILE = system.file("data/sample_coverage_data.txt",package="cnatools"),
        				  ZYGOSITY_FILE = system.file("data/sample_zygosity_data.txt",package="cnatools"),
 				  COVERAGE_INPUT = "txt", ZYGOSITY_INPUT = "txt",
 				  BEDFILE = system.file("data/sample_bedfile.txt",package="cnatools"),
 				  NP = 6, OUTDIR = "/out", PREFIX = "testrun")
+   ```
    * This should produce output (as described below) in /out.
    * For regular use, one would want to run as a non-root user and write to a filesystem outside of the container; this can be accomplished by adding a 'useradd' line to the end of the Dockerfile, and by mounting directories inside the container using the -v option when running docker.  See the docker documentation for details.
 
