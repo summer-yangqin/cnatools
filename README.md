@@ -126,19 +126,16 @@ Tools for detection of somatic and germline copy number aberrations from targete
 	* These models are ranked by plausibility; model_1 has been ranked as the best, but output from the other models is retained in case the algorithm makes an incorrect choice.
 	* For convenience, we have always appended a final subdirectory (model_N) that is not really a model at all, it simply produces output files corresponding to the case where the sample has extremely low purity and all copy number classifications are copy neutral.
 	* An analogous classification_models_TP folder will be produced once the tumor vs. pool code is complete.
-
-   The relevant output files in each model_i folder are as follows:
-     * adjustment.txt: the adjustment made to the coverage data to compensate for the sample potentially not being diploid
-     * classified-segments.txt: final classifications in a tab-delimited text file, one line per segment.
-     * copynumber_by_locus.txt: copy number summarized by locus, if an input locus file is given to the cna_pipeline function
-     * coverage_data_classified.txt: coverage data per targeted region, along with each region's copy number classification
-     * zygosity_data_classified.txt: zygosity data per SNP, along with each SNP's final copy number classification
-     * tumorcontent.txt: final estimated tumor content (between 0 and 1)
-     * coverage_zygosity_plot.png: plot of coverage and zygosity data, colored by status (dark red = amplification, red = gain, black = neutral, blue = loss, dark blue = homozogyous loss, orange = region excluded from classification, e.g. T-cell receptor loci)
-
-   The QC.TN.txt file contains some useful statistics relevant to the lower limit of tumor content estimation, and the model-summary-stats.txt file contains some summary statistics used to rank the models.  These will be described in more detail later on.
-
-   At the end of a run, the run_finished.txt touch file is produced.
+  	* The relevant output files in each model_i folder are as follows:
+     	  * adjustment.txt: the adjustment made to the coverage data to compensate for the sample potentially not being diploid
+     	  * classified-segments.txt: final classifications in a tab-delimited text file, one line per segment.
+     	  * copynumber_by_locus.txt: copy number summarized by locus, if an input locus file is given to the cna_pipeline function
+     	  * coverage_data_classified.txt: coverage data per targeted region, along with each region's copy number classification
+     	  * zygosity_data_classified.txt: zygosity data per SNP, along with each SNP's final copy number classification
+     	  * tumorcontent.txt: final estimated tumor content (between 0 and 1)
+     	  * coverage_zygosity_plot.png: plot of coverage and zygosity data, colored by status (dark red = amplification, red = gain, black = neutral, blue = loss, dark blue = homozogyous loss, orange = region excluded from classification, e.g. T-cell receptor loci)
+	* The QC.TN.txt file contains some useful statistics relevant to the lower limit of tumor content estimation, and the model-summary-stats.txt file contains some summary statistics used to rank the models.  These will be described in more detail later on.
+	* At the end of a run, the run_finished.txt touch file is produced.
 
 5. Notes and Limitations
 
