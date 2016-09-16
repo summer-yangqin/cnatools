@@ -119,17 +119,13 @@ Tools for detection of somatic and germline copy number aberrations from targete
      * PREFIX.zygosity-data-het-N.rds
    * run_finished.txt
 
-   At the beginning of the run, a params.txt file is produced that contains the set of input parameters passed to the algorithm.
-
-   The processing subdirectory contains the processed coverage, zygosity, and segmentation data, stored as binary R files (they can be read via the readRDS function in R).
-
-   The classification_models_TN directory (TN here stands for Tumor vs. Normal) contains the output from a set of candidate ploidy adjustments (each contained in its own folder: model_1, model_2, ..., model_N).
-
-   These models are ranked by plausibility; model_1 has been ranked as the best, but output from the other models is retained in case the algorithm makes an incorrect choice.
-
-   For convenience, we have always appended a final subdirectory (model_N) that is not really a model at all, it simply produces output files corresponding to the case where the sample has extremely low purity and all copy number classifications are copy neutral.
-
-   An analogous classification_models_TP folder will be produced once the tumor vs. pool code is complete.
+   Some notes regarding this output:
+   	* At the beginning of the run, a params.txt file is produced that contains the set of input parameters passed to the algorithm.
+	* The processing subdirectory contains the processed coverage, zygosity, and segmentation data, stored as binary R files (they can be read via the readRDS function in R).
+	* The classification_models_TN directory (TN here stands for Tumor vs. Normal) contains the output from a set of candidate ploidy adjustments (each contained in its own folder: model_1, model_2, ..., model_N).
+	* These models are ranked by plausibility; model_1 has been ranked as the best, but output from the other models is retained in case the algorithm makes an incorrect choice.
+	* For convenience, we have always appended a final subdirectory (model_N) that is not really a model at all, it simply produces output files corresponding to the case where the sample has extremely low purity and all copy number classifications are copy neutral.
+	* An analogous classification_models_TP folder will be produced once the tumor vs. pool code is complete.
 
    The relevant output files in each model_i folder are as follows:
      * adjustment.txt: the adjustment made to the coverage data to compensate for the sample potentially not being diploid
