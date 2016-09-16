@@ -106,6 +106,9 @@ Tools for detection of somatic and germline copy number aberrations from targete
         - PREFIX.coverage_zygosity_plot.png
         - PREFIX.tumorcontent.txt
         - PREFIX.zygosity_data_classified.txt
+     * model_2 (same as model 1)
+     * ...
+     * model_N (same as model 1)
    * params.txt
    * processing
      * PREFIX.coverage-data-exclude-poly.rds
