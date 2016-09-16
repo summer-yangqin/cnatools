@@ -51,8 +51,8 @@ Tools for detection of somatic and germline copy number aberrations from targete
 			      BEDFILE = system.file("data/sample_bedfile.txt",package="cnatools"),
 			      NP = 6, OUTDIR = "/out", PREFIX = "testrun")
    ```
-   * This should produce output (as described below) in /out, using 'testrun' as a prefix for output filenames.
-   * For regular use, one would want to run as a non-root user and write to a filesystem outside of the container; this can be accomplished by adding a 'useradd' line to the end of the Dockerfile, and by mounting directories inside the container using the -v option when running docker.  See the docker documentation for details.
+   * This should produce output (as described below) in /out, using 'testrun' as a prefix for output filenames.  The results should give 45% tumor content and exactly two copy number alterations: one copy gain of chr12 and one copy loss of chr3.  (See the prepare-data.R script for details regarding how the data was generated.)
+   * For regular use, one would want to run as a non-root user and write to a filesystem outside of the docker container.  See the docker documentation for details.
 
    Non-docker users should follow analogous installation steps, namely installing the necessary prerequisites as described above and running devtools::install_github("mctp/cnatools") to install the package.
 
