@@ -5,9 +5,9 @@ Tools for detection of somatic and germline copy number aberrations from targete
 
    This R package jointly estimates tumor purity and somatic copy number across the genome, given a pair of tumor/normal samples sequenced using a targeted capture approach.  It has been successfully used to analyze whole exome data as well as data from relatively large targeted panels (1500-1700 genes).
 
-   Features include the following:
-   * Preprocessing of coverage and zygosity data, using both a direct tumor-normal comparison as well as a tumor vs. pooled normal approach
-   * Joint purity and copy number estimation using a custom EM Algorithm
+   The package includes the following components:
+   * Preprocessing of coverage and zygosity data, comparing the tumor sample to both a matched normal and a pool of unrelated normal samples
+   * Joint purity and copy number estimation using an EM Algorithm
    * Ploidy correction by minimization of a lack-of-fit statistic, incorporating constraints to penalize biologically unlikely solutions
    * Germline copy number estimation
    * Coverage-only copy number estimation, for cases in which the sample is a mixture from different individuals (e.g. bone marrow transplants)
