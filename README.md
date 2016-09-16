@@ -78,8 +78,8 @@ Tools for detection of somatic and germline copy number aberrations from targete
    After installing the package, the following commands should clarify the required format of these three files:
    ```r
    head(read.delim(system.file("data/sample_bedfile.txt",package="cnatools"),stringsAsFactors=FALSE,header=F))
-   head(read.delim(system.file("data/sample_coverage_data.txt",package="cnatools"),stringsAsFactors=FALSE,header=F))
-   head(read.delim(system.file("data/sample_zygosity_data.txt",package="cnatools"),stringsAsFactors=FALSE,header=F))
+   head(read.delim(system.file("data/sample_coverage_data.txt",package="cnatools"),stringsAsFactors=FALSE,header=T))
+   head(read.delim(system.file("data/sample_zygosity_data.txt",package="cnatools"),stringsAsFactors=FALSE,header=T))
    ```
 
    The cna_pipeline function requires three additional arguments:
