@@ -95,7 +95,7 @@ Tools for detection of somatic and germline copy number aberrations from targete
 
    The output directory is structured as follows:
 
-   classification_models_TN
+   * classification_models_TN
      * model_1
        * PREFIX.adjustment.txt
        * PREFIX.classified-segments.txt
@@ -106,15 +106,15 @@ Tools for detection of somatic and germline copy number aberrations from targete
        * PREFIX.zygosity_data_classified.txt
      * model-summary-stats.txt
      * PREFIX.QC.TN.txt
-   params.txt
-   processing
+   * params.txt
+   * processing
      * PREFIX.coverage-data-exclude-poly.rds
      * PREFIX.coverage-data.rds
      * PREFIX.gender-inferred.txt
      * PREFIX.segments.TvN.rds
      * PREFIX.zygosity-data-full.rds
      * PREFIX.zygosity-data-het-N.rds
-   run_finished.txt
+   * run_finished.txt
 
    At the beginning of the run, a params.txt file is produced that contains the set of input parameters passed to the algorithm.
    The processing subdirectory contains the processed coverage, zygosity, and segmentation data, stored as binary R files (they can be read via the readRDS function in R).
